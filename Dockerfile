@@ -1,14 +1,10 @@
-FROM alpine:3.2
-MAINTAINER Ivan Pedrazas <ipedrazas@gmail.com>
+FROM python:3
 
-RUN apk add --update \
-      python \
-      python-dev \
-      py-pip \
-      g++ && \
-      pip install cookiecutter && \
-      apk del g++ py-pip  python-dev && \
-      rm -rf /var/cache/apk/*
+WORKDIR /usr/src/app
 
+COPY requirements.txt ./
+RUN pip install --no-cache-dir -r requirements.txt
+
+COPY . .
 
 ENTRYPOINT [ "cookiecutter" ]
